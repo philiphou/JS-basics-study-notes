@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        // var obj = '{"name":"PhilipHou","age": 18, "gender": "male"}'
+        // console.log(obj)
+        // console.log(typeof obj)
+        // var o = JSON.parse(obj);
+        // console.log(o.name);
+        // console.log(typeof o)
+        // var obj3 = {
+        //     name: '猪八戒',
+        //     age: 55,
+        //     gender: '男'
+        // }
+        // var json1 = JSON.stringify(obj3);
+        // console.log(typeof obj3);
+        // console.log(obj3)
+        // console.log(typeof json1)
+        // console.log(json1)
+        // var str2 = "alert('我是eval 方法')"
+        // eval(str2) // 就会弹出提示框，执行代码；
+
+        var o2 = "{'name':'悟空','age':25,'gender':'男'}"
+        var o3 = eval('(' + o2 + ')');
+        console.log(o3);
+        console.log(typeof o3)
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

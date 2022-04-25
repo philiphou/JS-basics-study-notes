@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="./tools.js"></script>
+    <script>
+        window.onload = function() {
+            /*
+             * 我们的每一个菜单都是一个 div， 
+             * 当div具有collapsed 这个类时，div就是叠起来的状态
+             * 当div没有这个类时，div 就是展开的状态
+             * 
+             */
+            // 功能实现，每次点击就叠起来或者展开，切换菜单的显示状态：
+            // 每个 div 里有一个 span, span 就是折叠后的显示相， 我们需要绑定单击响应函数： 
+
+            var menuSpan = document.querySelectorAll('.menuSpan')
+                // 定义一个变量，来保存当前打开的菜单；
+            var openDiv = menuSpan[0].parentNode; // 第一个是默认打开的
+
+            for (var i = 0; i < menuSpan.length; i++) {
+                menuSpan[i].onClick = function() {
+                    // 如果是展开的，我们点击span, 应该要叠起来那个span 所属的 div, 那个 div 与 span 是 父子关系： 
+                    // this 代表当前点击的span;
+                    var parentDiv = this.parentNode;
+                    // 在切换类之前， 获取元素高度： 
+                    var begin = parentDiv.offsetHeight;
+                    // 切换当前的 div；
+                    toggleClass(parentDiv, 'collapsed');
+                    // 动画效果就是将高度从begin  向 end 过度；
+                    // 调用 toggleClass 后，我们的div  高度瞬间就变，所以我们将元素的高度重置为 begin;
+                    parentDiv.style.height = begin + 'px'; // 内联样式，优先级更高，将值换为初始高度，即使点击了 toggle;
+                    // 改回去高度就可以慢慢做过度效果了，执行动画：
+                    move(parentDiv, 30, end, 'height', function() {
+                        parentDiv.style.height = ''; // 取消内联样式高度，回去CSS找；
+                    });
+                    // 过度执行完毕后，内联样式的 高度优先级最高，为了让我们可以多次做过度效果，我们需要取消内联样式；采用回调函数；
+
+
+                    // 切换类之后，获取一个新的高度： 
+                    var end = parentDiv.offsetHeight;
+                    console.log('begin: ' + begin + '.' + 'end: ' + end)
+                        // 根据需求，同时只能有一个div 打开： 打开菜单后，要关闭之前打开的菜单：
+                    if (openDiv != parentDiv && !hasClass(openDiv, 'collapsed')) {
+                        // 为了统一处理动画过度效果，我们希望在这将 addClass 改为 toggleClass;
+                        //addClass(openDiv, 'collapsed');
+                        // 此处 toggle class 不需要有移除功能：只用添加功能，所以加条件 !hasClass(openDiv, 'collapsed')
+
+                        toggleClass(openDiv, 'collapsed')
+                    }
+                    // 修改 openDiv 让其成为当前打开的div;
+                    openDiv = parentDiv;
+
+
+                }
+            }
+
+
+
+
+        }
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

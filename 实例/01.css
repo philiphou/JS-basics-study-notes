@@ -1,0 +1,11 @@
+#areaDiv {
+    width: 200px;
+    height: 200px;
+    background-color: #bfa;
+    text-align: center;
+}
+
+#showMsg {
+    border: red 2px solid;
+    width: 200px;
+}

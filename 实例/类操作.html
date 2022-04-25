@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .b1 {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+        
+        .b2 {
+            height: 200px;
+            background-color: green;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            var btn01 = document.getElementById('btn01');
+            var box1 = document.getElementById('box1');
+            btn01.onclick = function() {
+                // 通过style 属性修改样式：，每修改一次，浏览器重新渲染一次，这样的执行性能比较差；
+                // 当我们要修改多个样式时候，也不太方便； 
+                // 开发中不建议大量的用JS 来修改style 内联样式；
+
+                /* box1.style.width = 200 + 'px';
+                 box1.style.height = 200 + "px";
+                box1.style.backgroundColor = 'green';*/
+                // 希望一行代码可以修改多个样式：修改box的 class 属性：
+                // box1.className = 'b2'
+
+                // 这样我们只需要修改一次，即可修改多个样式；浏览器只需要重新渲染一次，性能提高，并且这种方式可以使我们表现和行为进一步分离；
+                // 低耦合，高内聚；
+                // 如果我们不希望完全去掉b1, 则需要：
+                //box1.className += " b2" // 记得 b2 前面需要有空格；
+                // 我们可以定义个函数，用来向一个元素中添加指定的class 属性值： 
+                toggleClass(box1, 'bb')
+            }
+
+            function addClass(obj, str) {
+                // 检查是否含有当前名称的class :
+                if (!hasClass(obj, str)) {
+
+                    obj.className += ' ' + str;
+                }
+                // 参数obj 代表 class要添加的对象
+            }
+            // 创建一个函数来检查obj 的class 属性里是否含有某个姓名：
+            function hasClass(obj, str) {
+                //利用正则表达式：
+                // var reg = /\bb2\b/; //要检查是否含有b2, 要使用单词边界： \b； 
+                // 为了调用参数，我们用构造函数： 
+                var reg = new RegExp('\\b' +
+                    str + '\\b')
+
+                return (reg.test(obj.className)) // 如果有 b2， 则返回true; 没有返回 false;
+
+
+            }
+            // 创建一个函数，删除一个元素对象中指定的class
+            function removeClass(obj, str) {
+                // 要删除一个class  的属性，直接用空串''代替要删除的属性；创建一个正则表达式：
+                var reg = new RegExp('\\b' + str + '\\b')
+                if (reg.test(obj.className)) {
+
+                    obj.className = obj.className.replace(str, '')
+                }
+
+
+            };
+
+            // toggleClass 可以用来切换一个类，如果元素中具有该类，则删除，如果元素中没有该类，则添加：
+            function toggleClass(obj, str) {
+                // 首先判断 obj中是否含有类 str；
+                if (hasClass(obj, str)) {
+                    removeClass(obj, str) // 有则删除
+                } else {
+                    addClass(obj, str); // 无则添加；
+                }
+
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+    <button id="btn01">点击更改样式</button>
+    <br><br>
+    <div id="box1" class='b1'></div>
+
+</body>
+
+</html>
